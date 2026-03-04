@@ -1,7 +1,17 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 
-const aiApiKey = process.env.GEMINI_API_KEY;
-const ai = new GoogleGenAI({ apiKey: aiApiKey || "" });
+let aiInstance: any = null;
+
+function getAI() {
+  if (!aiInstance) {
+    const aiApiKey = process.env.GEMINI_API_KEY;
+    if (!aiApiKey) {
+      console.warn("GEMINI_API_KEY is not defined. Please check your environment variables.");
+    }
+    aiInstance = new GoogleGenAI({ apiKey: aiApiKey || "" });
+  }
+  return aiInstance;
+}
 
 const SYSTEM_INSTRUCTION = `
 Bạn là Trợ lý AI Học tập môn Địa Lí lớp 12, được thiết kế bởi Thầy Ksor Gé. 
@@ -31,6 +41,7 @@ export async function chatWithAI(
   history: { role: "user" | "model", parts: { text?: string, inlineData?: { mimeType: string, data: string } }[] }[] = [],
   file?: { mimeType: string, data: string }
 ) {
+  const ai = getAI();
   // If there's a file (image or PDF), we use generateContent
   if (file) {
     const contents = [

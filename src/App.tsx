@@ -52,8 +52,15 @@ export default function App() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<{ file: File, preview?: string, type: 'image' | 'pdf' | 'word' } | null>(null);
+  const [isApiKeyMissing, setIsApiKeyMissing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!process.env.GEMINI_API_KEY) {
+      setIsApiKeyMissing(true);
+    }
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -150,10 +157,15 @@ export default function App() {
             data: base64Data
           };
         } else if (currentFile.type === 'word') {
-          // Extract text from Word file using mammoth
-          const arrayBuffer = await currentFile.file.arrayBuffer();
-          const result = await mammoth.extractRawText({ arrayBuffer });
-          finalMessage = `${messageText}\n\n[Nội dung từ file Word ${currentFile.file.name}]:\n${result.value}`;
+          try {
+            // Extract text from Word file using mammoth
+            const arrayBuffer = await currentFile.file.arrayBuffer();
+            const result = await mammoth.extractRawText({ arrayBuffer });
+            finalMessage = `${messageText}\n\n[Nội dung từ file Word ${currentFile.file.name}]:\n${result.value}`;
+          } catch (err) {
+            console.error('Mammoth extraction error:', err);
+            finalMessage = `${messageText}\n\n[Lỗi khi đọc file Word ${currentFile.file.name}. Vui lòng thử lại hoặc chụp ảnh câu hỏi.]`;
+          }
         }
       }
 
@@ -180,6 +192,14 @@ export default function App() {
 
   return (
     <div className="flex flex-col h-screen max-w-6xl mx-auto bg-slate-50 overflow-hidden font-sans antialiased">
+      {/* API Key Warning */}
+      {isApiKeyMissing && (
+        <div className="bg-red-600 text-white px-6 py-2 text-xs font-bold text-center flex items-center justify-center gap-2">
+          <Info className="w-3 h-3" />
+          CHƯA CẤU HÌNH API KEY TRÊN VERCEL. VUI LÒNG THÊM GEMINI_API_KEY VÀO ENVIRONMENT VARIABLES.
+        </div>
+      )}
+
       {/* Header */}
       <header className="bg-gradient-to-r from-slate-50 via-white to-slate-50 border-b border-slate-200 px-6 py-5 flex items-center justify-between z-10 shadow-sm relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-primary to-red-500 opacity-80"></div>
