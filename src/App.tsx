@@ -194,14 +194,24 @@ export default function App() {
     <div className="flex flex-col h-screen max-w-6xl mx-auto bg-slate-50 overflow-hidden font-sans antialiased">
       {/* API Key Warning */}
       {isApiKeyMissing && (
-        <div className="bg-red-600 text-white px-6 py-2 text-xs font-bold text-center flex items-center justify-center gap-2">
-          <Info className="w-3 h-3" />
-          CHƯA CẤU HÌNH API KEY TRÊN VERCEL. VUI LÒNG THÊM GEMINI_API_KEY VÀO ENVIRONMENT VARIABLES.
+        <div className="bg-red-600 text-white px-6 py-3 text-xs font-bold text-center flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-2">
+            <Info className="w-4 h-4" />
+            <span>CHƯA CẤU HÌNH API KEY TRÊN VERCEL.</span>
+          </div>
+          <a 
+            href="https://aistudio.google.com/app/api-keys" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="bg-white text-red-600 px-3 py-1 rounded-full hover:bg-red-50 transition-colors flex items-center gap-1"
+          >
+            Lấy API Key Miễn Phí Tại Đây <ExternalLink className="w-3 h-3" />
+          </a>
         </div>
       )}
 
       {/* Header */}
-      <header className="bg-gradient-to-r from-slate-50 via-white to-slate-50 border-b border-slate-200 px-6 py-5 flex items-center justify-between z-10 shadow-sm relative overflow-hidden">
+      <header className="bg-gradient-to-r from-slate-50 via-white to-slate-50 border-b border-slate-200 px-6 py-5 flex flex-col sm:flex-row items-center justify-between z-10 shadow-sm relative overflow-hidden gap-4">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-primary to-red-500 opacity-80"></div>
         <div className="flex items-center gap-4 relative z-10">
           <div className="bg-white p-3 rounded-2xl shadow-sm border border-slate-100">
@@ -216,19 +226,30 @@ export default function App() {
           </div>
         </div>
         
-        <div className="hidden md:flex items-center gap-4">
-          <div className="flex flex-col items-end">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Liên hệ Thầy Gé</span>
-            <a href="https://zalo.me/0383752789" target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary/80 transition-colors">
-              <Phone className="w-3.5 h-3.5" />
-              0383752789 (Zalo)
-            </a>
-          </div>
-          <div className="h-10 w-px bg-slate-200"></div>
-          <div className="bg-amber-50 border border-amber-100 px-3 py-1.5 rounded-xl flex items-center gap-2">
+        <div className="flex items-center gap-3 relative z-10">
+          <div className="hidden md:flex bg-amber-50 border border-amber-100 px-3 py-2 rounded-xl items-center gap-2">
             <Sparkles className="w-4 h-4 text-amber-500" />
-            <span className="text-xs font-bold text-amber-700">Dữ liệu 01/07/2025</span>
+            <span className="text-[10px] font-bold text-amber-700 uppercase tracking-tighter">Dữ liệu 01/07/2025</span>
           </div>
+          <div className="h-8 w-px bg-slate-200 hidden sm:block"></div>
+          <a 
+            href="https://aistudio.google.com/app/api-keys" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-xl text-xs font-bold border border-emerald-100 hover:bg-emerald-100 transition-all shadow-sm"
+          >
+            <Sparkles className="w-4 h-4" />
+            LẤY API KEY FREE
+          </a>
+          <a 
+            href="https://zalo.me/0383752789" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-xl text-xs font-bold border border-blue-100 hover:bg-blue-100 transition-all shadow-sm"
+          >
+            <Phone className="w-4 h-4" />
+            ZALO THẦY GÉ
+          </a>
         </div>
       </header>
 
