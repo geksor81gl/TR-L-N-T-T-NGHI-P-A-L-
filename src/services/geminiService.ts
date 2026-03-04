@@ -1,12 +1,18 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 
 let aiInstance: any = null;
+let customApiKey: string | null = null;
+
+export function setCustomApiKey(key: string) {
+  customApiKey = key;
+  aiInstance = null; // Reset instance to use new key
+}
 
 function getAI() {
   if (!aiInstance) {
-    const aiApiKey = process.env.GEMINI_API_KEY;
+    const aiApiKey = customApiKey || process.env.GEMINI_API_KEY;
     if (!aiApiKey) {
-      console.warn("GEMINI_API_KEY is not defined. Please check your environment variables.");
+      console.warn("GEMINI_API_KEY is not defined. Please check your environment variables or provide a custom key.");
     }
     aiInstance = new GoogleGenAI({ apiKey: aiApiKey || "" });
   }
