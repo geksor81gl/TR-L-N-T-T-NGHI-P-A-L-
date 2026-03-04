@@ -17,11 +17,11 @@ import {
   Image as ImageIcon,
   X,
   FileText,
-  File as FileIcon,
+  File as LucideFile,
   Loader2
 } from 'lucide-react';
 import Markdown from 'react-markdown';
-import mammoth from 'mammoth';
+import * as mammoth from 'mammoth';
 import { chatWithAI } from './services/geminiService';
 import { cn } from './utils/cn';
 
@@ -330,7 +330,7 @@ export default function App() {
                           "p-2 rounded-lg",
                           message.fileName.endsWith('.pdf') ? "bg-rose-100 text-rose-600" : "bg-blue-100 text-blue-600"
                         )}>
-                          {message.fileName.endsWith('.pdf') ? <FileText className="w-5 h-5" /> : <FileIcon className="w-5 h-5" />}
+                          {message.fileName.endsWith('.pdf') ? <FileText className="w-5 h-5" /> : <LucideFile className="w-5 h-5" />}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-bold truncate">{message.fileName}</p>
@@ -375,7 +375,7 @@ export default function App() {
                       "p-2 rounded-lg mb-2",
                       selectedFile.type === 'pdf' ? "bg-rose-100 text-rose-600" : "bg-blue-100 text-blue-600"
                     )}>
-                      {selectedFile.type === 'pdf' ? <FileText className="w-6 h-6" /> : <FileIcon className="w-6 h-6" />}
+                      {selectedFile.type === 'pdf' ? <FileText className="w-6 h-6" /> : <LucideFile className="w-6 h-6" />}
                     </div>
                     <p className="text-[10px] font-bold text-slate-600 truncate w-full px-2">{selectedFile.file.name}</p>
                   </div>

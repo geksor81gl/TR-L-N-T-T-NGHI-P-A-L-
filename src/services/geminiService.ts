@@ -1,6 +1,7 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const aiApiKey = process.env.GEMINI_API_KEY;
+const ai = new GoogleGenAI({ apiKey: aiApiKey || "" });
 
 const SYSTEM_INSTRUCTION = `
 Bạn là Trợ lý AI Học tập môn Địa Lí lớp 12, được thiết kế bởi Thầy Ksor Gé. 
